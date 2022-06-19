@@ -5,16 +5,14 @@ import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
 import NavBar from './NavBar';
 import Code from './Code';
 import Package from './Package';
-import Test from './Test';
 import Data from './Data';
 export default function Merchant() {
   return (
     <SafeAreaView style={styles.container}>
-      <Data></Data>
       <NavBar />
       <Code />
       <Package />
-      <Test />
+      <Data />
 
       <StatusBar style="auto" />
 

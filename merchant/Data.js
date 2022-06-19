@@ -1,96 +1,21 @@
-// import React, { useState, useEffect } from "react";
-// import { SafeAreaView, View, FlatList, StyleSheet, Text, StatusBar } from 'react-native';
-// // Accessing information
-// // Single user : http://localhost:3001/users/user2@gmail.com
-// // All users : http://localhost:3001/users/users
-
-
-// export default function Data() {
-//     const [list, setList] = useState(true);
-//     const [card, setCard] = useState(false);
-//     const [players, setPlayers] = useState([]);
-//     const [player, setPlayer] = useState({});
-    
-//     console.log("HERE NOW")
-//     useEffect(() => {
-//     try {
-//       fetch("http://localhost:3001/users/users")
-//         .then((response) => response.json())
-//         .then((responseJson) => {
-//         console.log("we are here");
-//         setPlayers(responseJson.data);
-//         setPlayers([33]);
-//         });
-//     }
-//     catch {
-//       setPlayers([21]);
-//       console.log("failed");
-//     }
-//    }, [] )
-    
-//     // }, []);
-    
-//     console.log("hi bitch")
-//     console.log(players)
-    
-//     // const Item = ({ email }) => (
-//     //     <View style={styles.item}>
-//     //       <Text style={styles.email}>{email}</Text>
-//     //     </View>
-//     //   );
-
-//     // const renderItem = ({ item }) => (
-//     //     <Item title={item.email} />
-//     // );
-
-//     // <SafeAreaView style={styles.container}>
-//     //         <FlatList
-//     //             data={players}
-//     //             renderItem={renderItem}
-//     //             keyExtractor={item => item.email}
-//     //         />
-//     // </SafeAreaView>
-
-//     console.log("Hi mffer")
-//     return (
-//         <View>
-//             <Text>TESTERBITCCLK:DSJFFJFJFJJFJFJFJJFJFJJFJFJ</Text>
-//         </View>
-//       );
-// }
-
-// const styles = StyleSheet.create({
-//     container: {
-//       flex: 1,
-//       marginTop: StatusBar.currentHeight || 0,
-//     },
-//     item: {
-//       backgroundColor: '#f9c2ff',
-//       padding: 20,
-//       marginVertical: 8,
-//       marginHorizontal: 16,
-//     },
-//     title: {
-//       fontSize: 32,
-//     },
-//   });
-
-
+import { StyleSheet, Text, View, FlatList } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import { FlatList, Text, View } from 'react-native';
-
 import Constants from 'expo-constants';
-const { manifest } = Constants;
 
+//http://localhost:3001/merchants/user2@gmail.com
+//CHANGE THIS WHEN REGISTRATION + LOGIN DONE
+const curUser = "user2@gmail.com"
+
+const { manifest } = Constants;
 const uri = `http://${manifest.debuggerHost
   .split(`:`)
   .shift()
-  .concat(`:3001`)}/users/users`;
+  .concat(`:3001`)}/merchants/` + curUser;
 
-export default App = () => {
+
+export default function App() {
   const [U, setU] = useState([]);
   const [isLoading, setLoading] = useState(true);
-
   useEffect(() => {
     fetch(uri)
       .then((response) => response.json())
@@ -99,14 +24,66 @@ export default App = () => {
       .finally(() => setLoading(false));
   }, []);
 
-  console.log(U);
-  console.log(U.data);
-  console.log("hi")
+  function showFlatList() {
+    if(!isLoading) {
+      return (
+      <View style={styles.container}>
+        <FlatList
+          data={U.data.clients}
+          renderItem={({ item }) => (
+            <View style={styles.listItem}>
+              <Text style={styles.listItemText}>{item.name}</Text>
+              <Text style={styles.listItemDate}>{item.date}</Text>
+              <Text style={styles.listItemCode}>{item.pickupID}</Text>
+            </View>
+          )}
+        />
+      </View> 
+      ); }
+    return <Text> NOTHING</Text>
+  }
+  
 
   return (
-
-    <View>
-      <Text></Text>
-    </View>
+    showFlatList()
   );
-};
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignContent: 'center',
+    marginLeft: 8,
+    marginRight: 8,
+  },
+
+  listItem: {
+    width: '100%',
+    height: 90,
+    alignItems: 'flexstart',
+    backgroundColor: '#feffcd',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    borderRadius: 15,
+    marginTop: 10,
+  },
+
+  listItemText: {
+    margin: 10,
+    fontSize: 22,
+    fontWeight: 'bold',
+  },
+
+  listItemDate: {
+    margin: 10,
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+
+  listItemCode: {
+    position: 'absolute',
+    top: 35,
+    margin: 15,
+    fontSize: 24,
+  }
+});
