@@ -106,7 +106,7 @@ export default App = () => {
   return (
 
     <View>
-      <Text>HI</Text>
+      <Text></Text>
     </View>
   );
 };

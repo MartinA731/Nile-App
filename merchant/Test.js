@@ -2,11 +2,15 @@ import { StyleSheet, Text, View, FlatList } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import Constants from 'expo-constants';
 
+//http://localhost:3001/merchants/user2@gmail.com
+//CHANGE THIS WHEN REGISTRATION + LOGIN DONE
+const curUser = "user2@gmail.com"
+
 const { manifest } = Constants;
 const uri = `http://${manifest.debuggerHost
   .split(`:`)
   .shift()
-  .concat(`:3001`)}/users/users`;
+  .concat(`:3001`)}/merchants/` + curUser;
 
 
 //testing data
@@ -20,8 +24,6 @@ const data = [
 ];
 
 
-
-
 export default function App() {
   const [U, setU] = useState([]);
   const [isLoading, setLoading] = useState(true);
@@ -33,22 +35,28 @@ export default function App() {
       .finally(() => setLoading(false));
   }, []);
 
+  function showFlatList() {
+    if(!isLoading) {
+      return (
+      <View style={styles.container}>
+        <FlatList
+          data={U.data.clients}
+          renderItem={({ item }) => (
+            <View style={styles.listItem}>
+              <Text style={styles.listItemText}>{item.name}</Text>
+              <Text style={styles.listItemDate}>{item.date}</Text>
+              <Text style={styles.listItemCode}>{item.pickupID}</Text>
+            </View>
+          )}
+        />
+      </View> 
+      ); }
+    return <Text> NOTHING</Text>
+  }
+  
+
   return (
-    <View style={styles.container}>
-
-      <FlatList
-        data={data}
-        keyExtractor={item => item.id}
-        renderItem={({ item }) => (
-          <View style={styles.listItem}>
-            <Text style={styles.listItemText}>{item.name}</Text>
-            <Text style={styles.listItemDate}>{item.date}</Text>
-            <Text style={styles.listItemCode}>{item.code}</Text>
-          </View>
-        )}
-      />
-
-    </View>
+    showFlatList()
   );
 }
 
