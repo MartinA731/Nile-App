@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Image } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 export default function App() {
@@ -7,7 +7,8 @@ export default function App() {
     <View style={styles.NavBar}>
       <View style={styles.left}>
         {/* This icon is a place holder for the logo */}
-        <MaterialCommunityIcons name="hexagon-outline" size={45} style={styles.logo} />
+        <Image style = {styles.logo} source={require('../assets/logo_transparent.png')}/>
+        
         <Text style={styles.Header}>Nile</Text>
       </View>
 
@@ -38,7 +39,10 @@ const styles = StyleSheet.create({
   },
 
   logo: {
-    color: 'white',
+    top: 10,
+    width: 50,
+    height: 130,
+    margin: 2,
   },
 
   Header: {
