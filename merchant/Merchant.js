@@ -6,13 +6,17 @@ import NavBar from './NavBar';
 import Code from './Code';
 import Package from './Package';
 import Data from './Data';
+import OrderDetails from './OrderDetails';
 export default function Merchant() {
   return (
     <SafeAreaView style={styles.container}>
       <NavBar />
-      <Code />
+      {/*<Code />
       <Package />
-      <Data />
+      <Data />*/}
+
+      {/*Order Detail page */}
+      <OrderDetails />
 
       <StatusBar style="auto" />
 
