@@ -6,7 +6,7 @@ import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
 export default function OrderDetails() {
   return (
     <SafeAreaView style={styles.container}>
-        <View style={styles.box1}>
+        <View style={styles.box}>
             <Text style={styles.Name}>Name</Text>
             <Text style={styles.Number}>Number</Text>
             <Text style={styles.Carrier}>Carrier</Text>
@@ -27,9 +27,17 @@ export default function OrderDetails() {
             <View style={styles.Info}>
                 <Text style={styles.text}>Awaiting Arrival</Text>
                 <Text style={styles.text}>Arrival Date:</Text>
-
+                <Text style={styles.text}>Arrived</Text>
+                <Text style={styles.text}>Pick Up</Text>
             </View>
+
+            <View style={styles.rightSide}></View>
+    
             
+        </View>
+        <Text>Report a Problem</Text>
+        <View style={styles.box}>
+            <Text>No Other Packages for Ava at:</Text>
         </View>
     
         
@@ -44,15 +52,16 @@ export default function OrderDetails() {
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
-    flex: '1',
     flexDirection: 'column',
     backgroundColor: '#fff',
+    flexDirection: 'column',
     marginLeft: 5,
     marginRight: 5,
     marginTop: 10,
+    padding: 8,
   },
 
-  box1: {
+  box: {
     borderWidth: 2,
     borderRadius: 8,
     borderColor: '#C3CBCD'
@@ -61,7 +70,8 @@ const styles = StyleSheet.create({
 
   Name:{
     fontSize: 24,
-    marginBottom: 10
+    marginBottom: 10,
+    textDecorationLine: 'underline'
   },
 
   Number:{
@@ -111,6 +121,10 @@ const styles = StyleSheet.create({
     marginLeft: 8,
     marginRight: 8,
     padding: 8,
+  },
+
+  rightSide:{
+    backgroundColor: '#b5d4ff'
   }
 
 
