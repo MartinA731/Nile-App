@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, ScrollView } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 
@@ -7,6 +7,8 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 export default function OrderDetails() {
   return (
     <SafeAreaView style={styles.container}>
+      <ScrollView>
+
         <View style={styles.box}>
           <View style ={styles.textContainer}>
             <Text style={styles.Name}>Name</Text>
@@ -26,7 +28,7 @@ export default function OrderDetails() {
               </View>
 
                 <View style={styles.bar}/>
-                
+
                 <View style={styles.circle}>
                   <View style={styles.step}>
                       <Text style={styles.text}>2</Text>
@@ -41,8 +43,18 @@ export default function OrderDetails() {
                 <Text style={styles.gray}>Expected Arrival:</Text>
 
                 <View style={styles.InfoRow}>
-                  <Text style={styles.text}>Arrived</Text>
-                  <Text style={styles.text}>Pick Up</Text>
+                  <View style={styles.Arrived}>
+                    <Text style={styles.text}>Arrived</Text>
+                    <Text style={styles.text}>--/--/--</Text>
+
+                  </View>
+
+                  <View style={styles.PickUp}>
+                    <Text style={styles.text}>Pick Up</Text>
+                    <Text style={styles.text}>--/--/--</Text>
+                  </View>
+                  
+                  
 
                 </View>
             </View>
@@ -68,19 +80,61 @@ export default function OrderDetails() {
         </View>
 
         <Text style={styles.grayText}>Report a Problem</Text>
+
+        {/* If no more packages */}
         <View style={styles.box}>
           <View style={styles.wrap}>
             <Text style={styles.boldText}>No Other Packages for Ava at:</Text>
             <Text style={styles.normalText}>Startbucks 425 S Carg. St</Text>
-
           </View>
             
         </View>
-    
-        
 
+        {/* If more packages */}
+        <View style={styles.box}>
+          <View style={styles.codeContainer}>
+                <View style={styles.code}>
+                    <MaterialCommunityIcons name="line-scan" size={45} style={styles.icon} />
+                </View>
 
-      <StatusBar style="auto" />
+                <View style={styles.code}>
+                    <MaterialCommunityIcons name="cursor-text" size={45} style={styles.icon} />
+                    
+                </View>
+            </View>
+            
+
+          <View style={styles.greenBox}>
+            <Text style={styles.gray}>(2) Package Awaiting Pick Up</Text>
+            <View style={styles.InfoG}>
+                  <Text style={styles.text}>Amazon (#RH766494739CN)</Text>
+                  <Text style={styles.boldText}>Arrived: 3/2/2022</Text>
+
+                  <View style={styles.InfoRow}>
+                   
+
+                  </View>
+              </View>
+
+          </View>
+
+          <View style={styles.yellowBox}>
+            <Text style={styles.gray}>(1) Package Awaiting Arrival</Text>
+            <View style={styles.InfoY}>
+                  <Text style={styles.text}>UPS (#RH766494739CN)</Text>
+                  <Text style={styles.boldText}>Expected Arrival: 3/12/2022</Text>
+
+                  <View style={styles.InfoRow}>
+                   
+
+                  </View>
+              </View>
+
+          </View>
+        </View>
+
+        <StatusBar style="auto" />
+      </ScrollView>
 
     </SafeAreaView>
   );
@@ -99,6 +153,7 @@ const styles = StyleSheet.create({
   },
 
   box: {
+    marginBottom: 5,
     borderWidth: 2,
     borderRadius: 8,
     borderColor: '#C3CBCD'
@@ -220,7 +275,6 @@ const styles = StyleSheet.create({
   },
 
   normalText:{
-    fontFamily: 'Open Sans',
     fontStyle: 'normal',
   },
 
@@ -238,12 +292,39 @@ const styles = StyleSheet.create({
     marginTop: 5,
     marginBottom: 5,
   },
+
   circle:{
     justifyContent:'center',
     alignContent:'center',
     alignItems:'center',
     textAlign:'center'
-  }
+  },
+
+  InfoG:{
+    height: 90,
+    alignItems: 'flexstart',
+    backgroundColor: '#EAFFDA',
+    flexDirection: 'column',
+    borderRadius: 15,
+    borderWidth: 4,
+    borderColor: '#DBFFBF',
+    margin: 8,
+    padding: 8,
+    marginTop: 10,
+  },
+
+  InfoY:{
+    height: 90,
+    alignItems: 'flexstart',
+    backgroundColor: '#FEFFCD',
+    flexDirection: 'column',
+    borderRadius: 15,
+    borderWidth: 4,
+    borderColor: '#FDFF8B',
+    margin: 8,
+    padding: 8,
+    marginTop: 10,
+  },
 
 
 
