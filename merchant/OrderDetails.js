@@ -16,21 +16,29 @@ export default function OrderDetails() {
           </View>
 
             <View style={styles.update}>
+              <View style={styles.circle}>
+
                 <View style={styles.step}>
                     <Text style={styles.text}>1</Text>
                 </View>
                 <Text>Arrival</Text>
 
+              </View>
+
                 <View style={styles.bar}/>
-                <View style={styles.step}>
-                    <Text style={styles.text}>2</Text>
+                
+                <View style={styles.circle}>
+                  <View style={styles.step}>
+                      <Text style={styles.text}>2</Text>
+                  </View>
+                  <Text>Pick UP</Text>
+
                 </View>
-                <Text>Pick UP</Text>
             </View>
 
             <View style={styles.Info}>
-                <Text style={styles.text}>Awaiting Arrival</Text>
-                <Text style={styles.text}>Arrival Date:</Text>
+                <Text style={styles.boldText}>Awaiting Arrival</Text>
+                <Text style={styles.gray}>Expected Arrival:</Text>
 
                 <View style={styles.InfoRow}>
                   <Text style={styles.text}>Arrived</Text>
@@ -59,10 +67,11 @@ export default function OrderDetails() {
 
         </View>
 
-        <Text>Report a Problem</Text>
+        <Text style={styles.grayText}>Report a Problem</Text>
         <View style={styles.box}>
           <View style={styles.wrap}>
             <Text style={styles.boldText}>No Other Packages for Ava at:</Text>
+            <Text style={styles.normalText}>Startbucks 425 S Carg. St</Text>
 
           </View>
             
@@ -129,6 +138,8 @@ const styles = StyleSheet.create({
     borderRadius: 30 / 2,
     backgroundColor: '#94FC92',
     alignItems: 'center',
+    textAlign:'center',
+    alignContent:'center'
   },
 
   text:{
@@ -153,6 +164,7 @@ const styles = StyleSheet.create({
     marginLeft: 8,
     marginRight: 8,
     padding: 8,
+    
   },
 
   InfoRow:{
@@ -199,11 +211,38 @@ const styles = StyleSheet.create({
   wrap:{
     alignItems: 'center',
     justifyContent:'center',
+    margin: 10,
   },
 
   boldText:{
     fontWeight:'bold',
     fontSize: 15,
+  },
+
+  normalText:{
+    fontFamily: 'Open Sans',
+    fontStyle: 'normal',
+  },
+
+  grayText:{
+    color: '#737B7D',
+    textDecorationLine: 'underline',
+    textAlign: 'center',
+    marginTop: 10,
+    marginBottom: 20,
+  },
+
+  gray:{
+    color: '#737B7D',
+    textAlign: 'center',
+    marginTop: 5,
+    marginBottom: 5,
+  },
+  circle:{
+    justifyContent:'center',
+    alignContent:'center',
+    alignItems:'center',
+    textAlign:'center'
   }
 
 
