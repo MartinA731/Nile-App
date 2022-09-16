@@ -1,5 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 
 
@@ -7,9 +8,12 @@ export default function OrderDetails() {
   return (
     <SafeAreaView style={styles.container}>
         <View style={styles.box}>
+          <View style ={styles.textContainer}>
             <Text style={styles.Name}>Name</Text>
             <Text style={styles.Number}>Number</Text>
             <Text style={styles.Carrier}>Carrier</Text>
+
+          </View>
 
             <View style={styles.update}>
                 <View style={styles.step}>
@@ -27,17 +31,41 @@ export default function OrderDetails() {
             <View style={styles.Info}>
                 <Text style={styles.text}>Awaiting Arrival</Text>
                 <Text style={styles.text}>Arrival Date:</Text>
-                <Text style={styles.text}>Arrived</Text>
-                <Text style={styles.text}>Pick Up</Text>
+
+                <View style={styles.InfoRow}>
+                  <Text style={styles.text}>Arrived</Text>
+                  <Text style={styles.text}>Pick Up</Text>
+
+                </View>
             </View>
 
-            <View style={styles.rightSide}></View>
-    
-            
+            <View style={styles.codeContainer}>
+                <View style={styles.code}>
+                    <MaterialCommunityIcons name="line-scan" size={45} style={styles.icon} />
+                </View>
+
+                <View style={styles.code}>
+                    <MaterialCommunityIcons name="cursor-text" size={45} style={styles.icon} />
+                    
+                </View>
+            </View>
+
+            <View style ={styles.codeContainer}>
+              <Text style={styles.codeText}>Scan Barcode</Text>
+              <Text style={styles.codeText}>Input Package Number</Text>
+
+            </View>
+
+
         </View>
+
         <Text>Report a Problem</Text>
         <View style={styles.box}>
-            <Text>No Other Packages for Ava at:</Text>
+          <View style={styles.wrap}>
+            <Text style={styles.boldText}>No Other Packages for Ava at:</Text>
+
+          </View>
+            
         </View>
     
         
@@ -66,6 +94,10 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderColor: '#C3CBCD'
 
+  },
+
+  textContainer:{
+    margin: 8
   },
 
   Name:{
@@ -123,8 +155,55 @@ const styles = StyleSheet.create({
     padding: 8,
   },
 
-  rightSide:{
-    backgroundColor: '#b5d4ff'
+  InfoRow:{
+    flexDirection: 'row',
+    width: '100%',
+    justifyContent: 'space-around',
+    backgroundColor:'red'
+  },
+
+  codeContainer:{
+    flexDirection: 'row',
+    justifyContent:'space-evenly',
+    marginTop: 8,
+    marginBottom: 8
+  },
+
+
+  code: {
+    width: "45%",
+    height: 55,
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 15,
+    backgroundColor: '#b5d4ff',
+  },
+
+  icon: {
+    position: 'absolute',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+
+  },
+
+  codeText: { 
+    flexDirection: 'row',
+    justifyContent:'space-evenly',
+    alignItems: 'center',
+    fontSize: 12,
+    color: '#899092',
+  },
+
+  wrap:{
+    alignItems: 'center',
+    justifyContent:'center',
+  },
+
+  boldText:{
+    fontWeight:'bold',
+    fontSize: 15,
   }
 
 

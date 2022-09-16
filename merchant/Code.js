@@ -106,6 +106,4 @@ const styles = StyleSheet.create({
         color: '#899092',
     }
 
-
-
 });
