@@ -56,7 +56,7 @@ export default function OrderDetails() {
 
           </View>
 
-          <View style={styles.codeContainer}>
+          <View  >
             <View style={styles.code}>
               <MaterialCommunityIcons name="line-scan" size={45} style={styles.icon} />
             </View>

@@ -1,5 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, SafeAreaView, Button, Alert, Pressable } from 'react-native';
+import React from 'react';
+import { StyleSheet, Text, View, SafeAreaView, Alert, TouchableHighlight, ScrollView  } from 'react-native';
+
 import NavBar from './NavBar';
 import Constants from 'expo-constants';
 
@@ -39,16 +41,25 @@ export default function Merchant() {
   return (
     <SafeAreaView style={styles.container}>
       <NavBar />
-      <Pressable style ={styles.requestButton} 
+      <TouchableHighlight  style ={styles.requestButton} 
       onPress = {() => Alert.alert('Pressed') }>
         <Text style ={styles.buttonText}> Request Now</Text> 
-      </Pressable >
+      </TouchableHighlight  >
 
       {/* Pending Transaction Section*/}
-      <View style ={styles.transaction}>
-        <Text style ={styles.productText}>Product:</Text>
-        <Text style ={styles.productText}>Waiting for pickup point:</Text>
-      </View>
+        {/* Step Component */}
+        <View style = {styles.progress}>
+          <View style = {styles.step}>
+          </View >
+
+        </View>
+
+
+        <ScrollView  style ={styles.transaction}>
+          <Text style ={styles.productText}>Product:</Text>
+          <Text style ={styles.productText}>Waiting for pickup point:</Text>
+        </ScrollView>
+
 
 
       <StatusBar style="auto" />
@@ -64,6 +75,20 @@ const styles = StyleSheet.create({
     flex: '1',
     flexDirection: 'column',
     backgroundColor: '#fff',
+  },
+
+  progress:{
+    alignItems:'center'
+  },
+
+  step:{
+    margin: 2,
+    alignItems:'center',
+    alignContent:'center',
+    width: 100,
+    height: 8,
+    backgroundColor: '#0B409C',
+    borderRadius: 20
   },
 
   requestButton: {
@@ -87,11 +112,10 @@ const styles = StyleSheet.create({
 
   transaction:{
     borderRadius: 4,
-    alignItems: 'center',
-    justifyContent: 'center',
     backgroundColor:'#EFF6FF',
-    alignItems:'flex-start',
-    margin: 6
+    marginTop: 10,
+    marginLeft: 10,
+    marginRight: 10
   },
 
   productText:{
@@ -100,7 +124,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.25,
     paddingHorizontal: 15,
     marginBottom: 30,
-    marginTop: 10
+    marginTop: 20
   }
 
 });
