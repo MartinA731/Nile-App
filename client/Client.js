@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View, SafeAreaView, Alert, TouchableHighlight, ScrollView  } from 'react-native';
+import { useState, useEffect } from 'react';
+import { StyleSheet, Text, View, SafeAreaView, TouchableHighlight, ScrollView, Modal, Pressable  } from 'react-native';
 
 import NavBar from './NavBar';
 import Constants from 'expo-constants';
@@ -38,15 +39,99 @@ const uri = `http://${manifest.debuggerHost
 // .catch(error => console.log(error))
 
 export default function Merchant() {
+  const[popUp, setUp] = useState(false);
+  const requestPage =()=>{
+    setUp(!popUp);
+  }
+
+  const[isPress, setIsPress] = useState(false);
+  const pressed = () =>{
+    setIsPress(!isPress);
+  }
+
+  const button = [
+    {
+      key: "1",
+      title: "Small"
+    },
+    {
+      key: "2",
+      title: "Medium"
+    },
+    {
+      key: "3",
+      title: "Large"
+    },
+  ]
+
+  const list = () =>{
+    return button.map( (element) =>{
+      return(
+        <View key = {element.key}>
+          <Text>{element.title}</Text>
+        </View>
+      );
+    }
+
+
+    )
+  }
+
+
   return (
     <SafeAreaView style={styles.container}>
       <NavBar />
-      <TouchableHighlight  style ={styles.requestButton} 
-      onPress = {() => Alert.alert('Pressed') }>
+      <TouchableHighlight style ={styles.requestButton} 
+      onPress = {requestPage}>
         <Text style ={styles.buttonText}> Request Now</Text> 
-      </TouchableHighlight  >
+      </TouchableHighlight>
 
-      {/* Pending Transaction Section*/}
+      <View className = "popUp">
+        {popUp?
+            <Modal transparent={true}>
+              <View style = {styles.popMain}>
+                <View style = {styles.popUp}>
+                  <Text style ={styles.popText}>Request Address</Text>
+
+                  <View>
+                    <Text style ={styles.productText}>Details</Text>
+                  </View>
+
+                  <View >
+                    <Text style ={styles.productText}>Size</Text>
+                    <View style ={styles.buttonContainer}>
+                      <View>{list()}</View>
+
+                    </View>
+
+                  </View>
+
+                  <View>
+                    <Text style ={styles.productText}>Category</Text>
+                  </View>
+
+                  <View style = {styles.popButtons}>
+                    <TouchableHighlight style ={styles.closeButton} 
+                      onPress = {requestPage}>
+                    <Text style ={styles.buttonText}> Close </Text> 
+                    </TouchableHighlight>
+
+                    <TouchableHighlight style ={styles.nextButton} 
+                      onPress = {requestPage}>
+                    <Text style ={styles.buttonText}> Next</Text> 
+                    </TouchableHighlight>
+
+                  </View>
+
+                </View>
+
+              </View>
+
+            </Modal>: null}
+
+      </View>
+
+       {/* Pending Transaction Section*/}
         {/* Step Component */}
         <View style = {styles.progress}>
           <View style = {styles.step}>
@@ -61,6 +146,7 @@ export default function Merchant() {
         </ScrollView>
 
 
+     
 
       <StatusBar style="auto" />
     </SafeAreaView>
@@ -68,12 +154,26 @@ export default function Merchant() {
 }
 
 const styles = StyleSheet.create({
+  popMain:{
+    flex: 1,
+    backgroundColor: "#000000aa",
+  },
+
+  popUp:{
+    height: "auto",
+    weight: "auto",
+    marginTop: 50,
+    marginLeft: 20,
+    marginRight: 20,
+    alignItems: "flex-start",
+    backgroundColor: "#B5D4FF",
+    borderRadius: 10
+  },
+
   container: {
     display: 'flex',
     width: '100%',
     height: '100%',
-    flex: '1',
-    flexDirection: 'column',
     backgroundColor: '#fff',
   },
 
@@ -123,8 +223,82 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     letterSpacing: 0.25,
     paddingHorizontal: 15,
-    marginBottom: 30,
+    marginBottom: 10,
     marginTop: 20
+  },
+
+  popText:{
+    fontSize: 18,
+    fontWeight: 'bold',
+    letterSpacing: 0.25,
+    paddingHorizontal: 15,
+    marginTop: 20
+  },
+
+  popButtons:{
+    flexDirection: "row",
+    marginTop: 20,
+    marginBottom: 20,
+    marginLeft: 10
+  },
+
+  nextButton:{
+    width: 100,
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignContent:'center',
+    paddingVertical: 12,
+    borderRadius: 4,
+    elevation: 3,
+    backgroundColor: '#0B409C',
+    margin: 6
+  },
+
+  closeButton:{
+    width: 100,
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignContent:'center',
+    paddingVertical: 12,
+    borderRadius: 4,
+    elevation: 3,
+    backgroundColor: '#ff8476',
+    margin: 6,
+  },
+
+  buttonContainer:{
+    flexDirection: "row",
+    
+  },
+
+  popButtons2:{
+    padding: 20,
+    marginLeft: 10,
+    alignItems: "center",
+    textAlign: "center",
+    alignContent:"center",
+    backgroundColor:"red",
+    width: "95%"
+  },
+
+  sizeButton:{
+    width: 100,
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignContent:'center',
+    paddingVertical: 12,
+    borderRadius: 4,
+    backgroundColor: '#ff8476',
+  },
+
+  pressButton:{
+    width: 100,
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignContent:'center',
+    paddingVertical: 12,
+    borderRadius: 4,
+    backgroundColor: 'blue',
   }
 
 });
