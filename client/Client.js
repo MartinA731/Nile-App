@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, TouchableHighlight, ScrollView, Modal, Pressable  } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, TouchableHighlight, ScrollView, Modal, TextInput} from 'react-native';
 
 import NavBar from './NavBar';
 import Constants from 'expo-constants';
@@ -49,6 +49,9 @@ export default function Merchant() {
     setIsPress(!isPress);
   }
 
+  const[text, onChangeText] = React.useState("Enter Product Details or SKU");
+
+
   const button = [
     {
       key: "1",
@@ -67,9 +70,11 @@ export default function Merchant() {
   const list = () =>{
     return button.map( (element) =>{
       return(
-        <View key = {element.key}>
-          <Text>{element.title}</Text>
-        </View>
+        <TouchableHighlight key = {element.key} style = {styles.buttonContainer}>
+          <View style = {styles.sizeButton}>
+            <Text>{element.title}</Text>
+          </View>
+        </TouchableHighlight>
       );
     }
 
@@ -94,7 +99,17 @@ export default function Merchant() {
                   <Text style ={styles.popText}>Request Address</Text>
 
                   <View>
-                    <Text style ={styles.productText}>Details</Text>
+                    <View>
+                      <Text style ={styles.productText}>Details</Text>
+                    </View>
+                    <View >
+                    <TextInput
+                      style={styles.input}
+                      onChangeText={onChangeText}
+                      value={text}
+                    />
+                      
+                    </View>
                   </View>
 
                   <View >
@@ -266,9 +281,11 @@ const styles = StyleSheet.create({
     margin: 6,
   },
 
-  buttonContainer:{
+  buttonContainer:{ 
     flexDirection: "row",
-    
+    width : '100%',
+    padding: 10,
+    backgroundColor: 'red'
   },
 
   popButtons2:{
@@ -282,11 +299,9 @@ const styles = StyleSheet.create({
   },
 
   sizeButton:{
-    width: 100,
     alignItems: 'center',
     justifyContent: 'center',
     alignContent:'center',
-    paddingVertical: 12,
     borderRadius: 4,
     backgroundColor: '#ff8476',
   },
@@ -299,6 +314,16 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     borderRadius: 4,
     backgroundColor: 'blue',
+  },
+
+  input:{
+    height: 45,
+    width: '100%',
+    marginLeft: 15,
+    padding: 12,
+    borderWidth: 2,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 8
   }
 
 });
