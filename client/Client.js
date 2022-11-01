@@ -55,6 +55,11 @@ export default function Merchant() {
 
   //category dropdown
 
+  //requestPage2
+  const[popUp2, setUp2] = useState(false);
+  const requestPage2 = () =>{
+    setUp2(!popUp2);
+  }
 
 
   const button = [
@@ -77,7 +82,7 @@ export default function Merchant() {
       return(
         <View key = {element.key}>
           <TouchableHighlight style = {[
-            index === selectSize ? styles.sizeButtonSelected :styles.sizeButton
+            index === selectSize ? styles.sizeButtonSelected : styles.sizeButton
           ]}
           onPress = {(item) => select(item, index)}>
             <Text
@@ -148,9 +153,15 @@ export default function Merchant() {
                     </TouchableHighlight>
 
                     <TouchableHighlight style ={styles.nextButton} 
-                      onPress = {requestPage}>
+                      onPress = {requestPage2}>
                     <Text style ={styles.buttonText}> Next</Text> 
                     </TouchableHighlight>
+
+                    <View className = "popUp2">
+
+                    </View>
+
+                    
 
                   </View>
 
