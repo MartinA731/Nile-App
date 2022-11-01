@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, {Component} from 'react';
 import { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, TouchableHighlight, ScrollView, Modal, TextInput} from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, TouchableHighlight, ScrollView, Modal, TextInput, Picker} from 'react-native';
 
 import NavBar from './NavBar';
 import Constants from 'expo-constants';
@@ -39,17 +39,22 @@ const uri = `http://${manifest.debuggerHost
 // .catch(error => console.log(error))
 
 export default function Merchant() {
+  //Modal button
   const[popUp, setUp] = useState(false);
   const requestPage =()=>{
     setUp(!popUp);
   }
 
-  const[isPress, setIsPress] = useState(false);
-  const pressed = () =>{
-    setIsPress(!isPress);
+  //size buttons
+  const[selectSize, setSize] = useState(0);
+  const select = (item, id) =>{
+    setSize(id)
   }
+  //detail section text input 
+  const[text, onChangeText] = React.useState(0);
 
-  const[text, onChangeText] = React.useState("Enter Product Details or SKU");
+  //category dropdown
+
 
 
   const button = [
@@ -68,13 +73,19 @@ export default function Merchant() {
   ]
 
   const list = () =>{
-    return button.map( (element) =>{
+    return button.map( (element, index) =>{
       return(
-        <TouchableHighlight key = {element.key} style = {styles.buttonContainer}>
-          <View style = {styles.sizeButton}>
-            <Text>{element.title}</Text>
-          </View>
-        </TouchableHighlight>
+        <View key = {element.key}>
+          <TouchableHighlight style = {[
+            index === selectSize ? styles.sizeButtonSelected :styles.sizeButton
+          ]}
+          onPress = {(item) => select(item, index)}>
+            <Text
+            style = {[
+              index === selectSize ? styles.textActive : null
+            ]}>{element.title}</Text>
+          </TouchableHighlight>
+        </View>
       );
     }
 
@@ -106,7 +117,8 @@ export default function Merchant() {
                     <TextInput
                       style={styles.input}
                       onChangeText={onChangeText}
-                      value={text}
+                      placeholder = "Enter Product Details or SKU"
+                      
                     />
                       
                     </View>
@@ -115,14 +127,18 @@ export default function Merchant() {
                   <View >
                     <Text style ={styles.productText}>Size</Text>
                     <View style ={styles.buttonContainer}>
-                      <View>{list()}</View>
+                      <View style = {styles.buttonContainer}>{list()}</View>
 
                     </View>
 
                   </View>
 
                   <View>
-                    <Text style ={styles.productText}>Category</Text>
+                    <View>
+                      <Text style ={styles.productText}>Category</Text>
+                    </View>
+                    <View style={styles.input}></View>
+
                   </View>
 
                   <View style = {styles.popButtons}>
@@ -283,9 +299,8 @@ const styles = StyleSheet.create({
 
   buttonContainer:{ 
     flexDirection: "row",
-    width : '100%',
-    padding: 10,
-    backgroundColor: 'red'
+    justifyContent: 'space-between',
+    marginLeft: 10,
   },
 
   popButtons2:{
@@ -299,11 +314,27 @@ const styles = StyleSheet.create({
   },
 
   sizeButton:{
+    paddingVertical: 15,
+    paddingHorizontal: 20,
     alignItems: 'center',
     justifyContent: 'center',
     alignContent:'center',
-    borderRadius: 4,
-    backgroundColor: '#ff8476',
+    backgroundColor: '#ffffff',
+    borderRadius: 6,
+    borderWidth: 2,
+    marginRight: 5
+  },
+
+  sizeButtonSelected:{
+    paddingVertical: 15,
+    paddingHorizontal: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignContent:'center',
+    backgroundColor: '#0B409C',
+    borderRadius: 6,
+    borderWidth: 2,
+    marginRight: 5
   },
 
   pressButton:{
@@ -324,6 +355,10 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     backgroundColor: '#FFFFFF',
     borderRadius: 8
+  },
+
+  textActive:{
+    color: '#ffffff'
   }
 
 });
