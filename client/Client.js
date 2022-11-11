@@ -1,9 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {Component} from 'react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { StyleSheet, Text, View, SafeAreaView, TouchableHighlight, ScrollView, Modal, TextInput, Picker} from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import NavBar from './NavBar';
+import RequestAddress from './Modal.js/RequestAddress';
 import Constants from 'expo-constants';
 
 //http://localhost:3001/merchants/user2@gmail.com
@@ -55,12 +58,6 @@ export default function Merchant() {
 
   //category dropdown
 
-  //requestPage2
-  const[popUp2, setUp2] = useState(false);
-  const requestPage2 = () =>{
-    setUp2(!popUp2);
-  }
-
 
   const button = [
     {
@@ -107,71 +104,70 @@ export default function Merchant() {
         <Text style ={styles.buttonText}> Request Now</Text> 
       </TouchableHighlight>
 
-      <View className = "popUp">
-        {popUp?
-            <Modal transparent={true}>
-              <View style = {styles.popMain}>
-                <View style = {styles.popUp}>
-                  <Text style ={styles.popText}>Request Address</Text>
-
-                  <View>
+        <View className = "popUp">
+        <View>
+          {popUp?
+              <Modal transparent={true}>
+                <View style = {styles.popMain} id = "page1">
+                  {/* first page of Modal */}
+                  <View style = {styles.popUp}>
+                    <Text style ={styles.popText}>Request Address</Text>
+                    {/* BEGIN product details section */}
                     <View>
-                      <Text style ={styles.productText}>Details</Text>
+                      <View>
+                        <Text style ={styles.productText}>Details</Text>
+                      </View>
+                      <View >
+                      <TextInput
+                        style={styles.input}
+                        onChangeText={onChangeText}
+                        placeholder = "Enter Product Details or SKU"
+                        />
+                      </View>
                     </View>
-                    <View >
-                    <TextInput
-                      style={styles.input}
-                      onChangeText={onChangeText}
-                      placeholder = "Enter Product Details or SKU"
-                      
-                    />
-                      
-                    </View>
-                  </View>
+                    {/* END product details section */}
 
-                  <View >
-                    <Text style ={styles.productText}>Size</Text>
-                    <View style ={styles.buttonContainer}>
-                      <View style = {styles.buttonContainer}>{list()}</View>
-
-                    </View>
-
-                  </View>
-
-                  <View>
+                    {/* BEGIN size selection section */}
                     <View>
-                      <Text style ={styles.productText}>Category</Text>
+                      <Text style ={styles.productText}>Size</Text>
+                      <View style ={styles.buttonContainer}>
+                        <View style = {styles.buttonContainer}>{list()}</View>
+                      </View>
                     </View>
-                    <View style={styles.input}></View>
+                    {/* END size selection section */}
 
-                  </View>
+                    {/* BEGIN Category section */}
+                    <View>
+                      <View>
+                        <Text style ={styles.productText}>Category</Text>
+                      </View>
+                      <View style={styles.input}></View>
+                    </View>
+                    {/* END Category section */}
 
-                  <View style = {styles.popButtons}>
-                    <TouchableHighlight style ={styles.closeButton} 
-                      onPress = {requestPage}>
-                    <Text style ={styles.buttonText}> Close </Text> 
-                    </TouchableHighlight>
-
-                    <TouchableHighlight style ={styles.nextButton} 
-                      onPress = {requestPage2}>
-                    <Text style ={styles.buttonText}> Next</Text> 
-                    </TouchableHighlight>
-
-                    <View className = "popUp2">
+                    <View style = {styles.popButtons}>
+                      {/* CLOSE Button*/}
+                      <TouchableHighlight style ={styles.closeButton} 
+                        onPress = {requestPage}>
+                      <Text style ={styles.buttonText}> Close </Text> 
+                      </TouchableHighlight>
+                      
+                      {/* NEXT Button */}
+                      <TouchableHighlight style ={styles.nextButton}>
+                      <Text style ={styles.buttonText}> Next</Text> 
+                      </TouchableHighlight>
 
                     </View>
-
-                    
 
                   </View>
 
                 </View>
 
-              </View>
+              </Modal>: null}
 
-            </Modal>: null}
+            </View>
 
-      </View>
+        </View>
 
        {/* Pending Transaction Section*/}
         {/* Step Component */}
