@@ -1,19 +1,19 @@
 import React from "react";
 import { SafeAreaView, StyleSheet, Text, View, Image, ScrollView, TextInput, Button } from 'react-native';
-import CustomInput from './Custom/Registration1';
+import CustomInput1 from './Custom/Registration1';
 import CustomInput2 from './Custom/Registration2';
 import CustomInput3 from './Custom/Registration3';
 import {useState} from "react";
 import axios from 'axios';
-import {API_BASE_URL, ACCESS_TOKEN_NAME} from '../../constants/apiContants';
+import {API_BASE_URL, ACCESS_TOKEN_NAME} from '../src/constants/apiContants';
 import qs from 'qs';
+
 
 
 import { withRouter } from "react-router-dom";
 
-export default function App(props) {
 
-
+export default function Registration({navigation}) {
   const [state , setState] = useState({
     email : "",
     password : "",
@@ -32,18 +32,8 @@ export default function App(props) {
       }))
   }
 
-  const redirectToMerchant = () => {
-    props.updateTitle('Client')
-    props.history.push({
-        pathname:"/client",
-        state:{
-            login:state.email
-         }
-       });
-  }
 
   const sendDetailsToServer = () => {
-    console.log(props);
     if(state.email.length && state.password.length) {
         const payload={
             "email":state.email,
@@ -62,42 +52,42 @@ export default function App(props) {
             'Access-Control-Allow-Origin': '*'
           },
           data : data
-        };
-        
+        };        
         axios(config)
         .then(function (response) {
-          console.log(JSON.stringify(response.data));
-          // redirectToMerchant();
+          console.log(response.status)
+          if(response.status === 200) {
+            navigation.navigate('Merchant')
+          }
         })
         .catch(function (error) {
           console.log(error);
         });
-        
-        
-         
     } else {
         console.error('Please enter valid username and password')    
     }
   }
 
-  const [text, onChangeText] = React.useState("Useless Text");
 
   return (
     <SafeAreaView style={styles.container}>
 
+      <View style={styles.top}>
+          <Text> Enter Email Below </Text>
+      </View>
+
       <TextInput
-        onChangeText={onChangeText}
-        value={text}
-        onChange={handleChange}
-      />
-      <TextInput
-        //onChangeText={(email) => setState({email})}
         onChangeText={(email) => setState(prevState => ({
           ...prevState,
           "email" : email
         }))}
         value={state.email}
       />
+
+      <View style={styles.top}>
+          <Text> Enter password Below </Text>
+      </View>
+
       <TextInput
         style={styles.input}
         onChangeText={(password) => setState(prevState => ({
@@ -110,7 +100,7 @@ export default function App(props) {
       <View style={styles.top}>
         <Image
           style={styles.Logo}
-          source={require('../../../assets/logo_transparent1.png')} />
+          source={require('../assets/logo_transparent.png')} />
 
         <Text style={styles.text}>Merchant</Text>
 
@@ -118,20 +108,13 @@ export default function App(props) {
 
       <ScrollView style={styles.box}>
         <Text style={styles.heading}>Create Account</Text>
-        
-        { /*NOTED: the navigation feature is not yet created, to view each page, 
-          please change the name below based on line 3-5*/ }
-        <CustomInput3/>
-
+        <CustomInput1/>
       </ScrollView>
 
-      <View style={styles.top}>
-        <Text style={styles.text}>{text}</Text>
-      </View>
 
       <Button
-        onPress={sendDetailsToServer()}
-        title="Learn More"
+        onPress={sendDetailsToServer}
+        title="Register"
         color="#841584"
         accessibilityLabel="Learn more about this purple button"
       />

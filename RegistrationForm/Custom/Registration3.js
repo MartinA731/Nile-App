@@ -1,8 +1,64 @@
-import React from 'react'
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Keyboard, ScrollView} from 'react-native';
-import { Button } from 'react-native-web';
+import React from "react";
+import { SafeAreaView, StyleSheet, Text, View, Image, ScrollView, TextInput, Button, TouchableOpacity } from 'react-native';
+import {useState} from "react";
+import axios from 'axios';
+// import {API_BASE_URL, ACCESS_TOKEN_NAME} from '../src/constants/apiContants';
+import qs from 'qs';
 
 export default function App() {
+    const [state , setState] = useState({
+        email : "",
+        password : "",
+        confirmPassword: "",
+        client : false,
+        merchant : false,
+        successMessage: null,
+        address: "",
+        showAddress : false,
+      })
+
+    const handleChange = (e) => {
+        const {id , value} = e.target   
+        setState(prevState => ({
+            ...prevState,
+            [id] : value
+        }))
+    }
+    
+    const sendDetailsToServer = () => {
+        if(state.email.length && state.password.length) {
+            const payload={
+                "email":state.email,
+                "password":state.password,
+            }
+            var data = qs.stringify({
+                'email': state.email,
+                'password': state.password
+            });
+            var u = 'http://localhost:4000/user/register?email=' + state.email + "&password=" + state.password
+            var config = {
+                method: 'post',
+                url: u,
+                headers: { 
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Access-Control-Allow-Origin': '*'
+                },
+                data : data
+            };        
+            axios(config)
+            .then(function (response) {
+                console.log(response.status)
+                if(response.status === 200) {
+                navigation.navigate('Merchant')
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        } else {
+            console.error('Please enter valid username and password')    
+        }
+    }
     return (
         <View style={styles.container}>
             <Text style={styles.greyText}>Step 3. Review & Create</Text>
