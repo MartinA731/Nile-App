@@ -1,9 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, TouchableHighlight, ScrollView, Modal, Pressable  } from 'react-native';
+import React, {Component} from 'react';
+import { useState } from 'react';
+import { StyleSheet, Text, View, SafeAreaView, TouchableHighlight, ScrollView, Modal, TextInput, Picker} from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import NavBar from './NavBar';
+import RequestAddress from './Modal.js/RequestAddress';
 import Constants from 'expo-constants';
 
 //http://localhost:3001/merchants/user2@gmail.com
@@ -39,15 +42,22 @@ const uri = `http://${manifest.debuggerHost
 // .catch(error => console.log(error))
 
 export default function Merchant() {
+  //Modal button
   const[popUp, setUp] = useState(false);
   const requestPage =()=>{
     setUp(!popUp);
   }
 
-  const[isPress, setIsPress] = useState(false);
-  const pressed = () =>{
-    setIsPress(!isPress);
+  //size buttons
+  const[selectSize, setSize] = useState(0);
+  const select = (item, id) =>{
+    setSize(id)
   }
+  //detail section text input 
+  const[text, onChangeText] = React.useState(0);
+
+  //category dropdown
+
 
   const button = [
     {
@@ -65,10 +75,18 @@ export default function Merchant() {
   ]
 
   const list = () =>{
-    return button.map( (element) =>{
+    return button.map( (element, index) =>{
       return(
         <View key = {element.key}>
-          <Text>{element.title}</Text>
+          <TouchableHighlight style = {[
+            index === selectSize ? styles.sizeButtonSelected : styles.sizeButton
+          ]}
+          onPress = {(item) => select(item, index)}>
+            <Text
+            style = {[
+              index === selectSize ? styles.textActive : null
+            ]}>{element.title}</Text>
+          </TouchableHighlight>
         </View>
       );
     }
@@ -86,50 +104,70 @@ export default function Merchant() {
         <Text style ={styles.buttonText}> Request Now</Text> 
       </TouchableHighlight>
 
-      <View className = "popUp">
-        {popUp?
-            <Modal transparent={true}>
-              <View style = {styles.popMain}>
-                <View style = {styles.popUp}>
-                  <Text style ={styles.popText}>Request Address</Text>
+        <View className = "popUp">
+        <View>
+          {popUp?
+              <Modal transparent={true}>
+                <View style = {styles.popMain} id = "page1">
+                  {/* first page of Modal */}
+                  <View style = {styles.popUp}>
+                    <Text style ={styles.popText}>Request Address</Text>
+                    {/* BEGIN product details section */}
+                    <View>
+                      <View>
+                        <Text style ={styles.productText}>Details</Text>
+                      </View>
+                      <View >
+                      <TextInput
+                        style={styles.input}
+                        onChangeText={onChangeText}
+                        placeholder = "Enter Product Details or SKU"
+                        />
+                      </View>
+                    </View>
+                    {/* END product details section */}
 
-                  <View>
-                    <Text style ={styles.productText}>Details</Text>
-                  </View>
+                    {/* BEGIN size selection section */}
+                    <View>
+                      <Text style ={styles.productText}>Size</Text>
+                      <View style ={styles.buttonContainer}>
+                        <View style = {styles.buttonContainer}>{list()}</View>
+                      </View>
+                    </View>
+                    {/* END size selection section */}
 
-                  <View >
-                    <Text style ={styles.productText}>Size</Text>
-                    <View style ={styles.buttonContainer}>
-                      <View>{list()}</View>
+                    {/* BEGIN Category section */}
+                    <View>
+                      <View>
+                        <Text style ={styles.productText}>Category</Text>
+                      </View>
+                      <View style={styles.input}></View>
+                    </View>
+                    {/* END Category section */}
+
+                    <View style = {styles.popButtons}>
+                      {/* CLOSE Button*/}
+                      <TouchableHighlight style ={styles.closeButton} 
+                        onPress = {requestPage}>
+                      <Text style ={styles.buttonText}> Close </Text> 
+                      </TouchableHighlight>
+                      
+                      {/* NEXT Button */}
+                      <TouchableHighlight style ={styles.nextButton}>
+                      <Text style ={styles.buttonText}> Next</Text> 
+                      </TouchableHighlight>
 
                     </View>
 
                   </View>
 
-                  <View>
-                    <Text style ={styles.productText}>Category</Text>
-                  </View>
-
-                  <View style = {styles.popButtons}>
-                    <TouchableHighlight style ={styles.closeButton} 
-                      onPress = {requestPage}>
-                    <Text style ={styles.buttonText}> Close </Text> 
-                    </TouchableHighlight>
-
-                    <TouchableHighlight style ={styles.nextButton} 
-                      onPress = {requestPage}>
-                    <Text style ={styles.buttonText}> Next</Text> 
-                    </TouchableHighlight>
-
-                  </View>
-
                 </View>
 
-              </View>
+              </Modal>: null}
 
-            </Modal>: null}
+            </View>
 
-      </View>
+        </View>
 
        {/* Pending Transaction Section*/}
         {/* Step Component */}
@@ -266,9 +304,10 @@ const styles = StyleSheet.create({
     margin: 6,
   },
 
-  buttonContainer:{
+  buttonContainer:{ 
     flexDirection: "row",
-    
+    justifyContent: 'space-between',
+    marginLeft: 10,
   },
 
   popButtons2:{
@@ -282,13 +321,27 @@ const styles = StyleSheet.create({
   },
 
   sizeButton:{
-    width: 100,
+    paddingVertical: 15,
+    paddingHorizontal: 20,
     alignItems: 'center',
     justifyContent: 'center',
     alignContent:'center',
-    paddingVertical: 12,
-    borderRadius: 4,
-    backgroundColor: '#ff8476',
+    backgroundColor: '#ffffff',
+    borderRadius: 6,
+    borderWidth: 2,
+    marginRight: 5
+  },
+
+  sizeButtonSelected:{
+    paddingVertical: 15,
+    paddingHorizontal: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignContent:'center',
+    backgroundColor: '#0B409C',
+    borderRadius: 6,
+    borderWidth: 2,
+    marginRight: 5
   },
 
   pressButton:{
@@ -299,6 +352,20 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     borderRadius: 4,
     backgroundColor: 'blue',
+  },
+
+  input:{
+    height: 45,
+    width: '100%',
+    marginLeft: 15,
+    padding: 12,
+    borderWidth: 2,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 8
+  },
+
+  textActive:{
+    color: '#ffffff'
   }
 
 });
