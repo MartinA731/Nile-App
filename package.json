@@ -11,6 +11,14 @@
   },
   "dependencies": {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+    "@react-native-community/masked-view": "^0.1.11",
+    "@react-navigation/native": "^6.0.13",
+    "@react-navigation/native-stack": "^6.9.1",
+    "@react-navigation/stack": "^6.3.3",
+    "axios": "^1.2.2",
+>>>>>>> Stashed changes
     "expo": "~45.0.0",
 =======
     "body-parser": "^1.20.0",
