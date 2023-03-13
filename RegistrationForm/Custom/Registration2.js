@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Keyboard, ScrollView } from 'react-native';
 
-export default function App(){
+export default function Registration2({navigation}){
     return (
         <View style={styles.container}>
         <Text style={styles.greyText}>Step 2. Point of Contact</Text>
@@ -37,7 +37,7 @@ export default function App(){
             </TouchableOpacity>
 
             {/*button forward*/}
-            <TouchableOpacity style={styles.button2}>
+            <TouchableOpacity onPress={() => navigation.navigate('Registration3')} style={styles.button2}>
                 <Text style={styles.buttonText}>Next</Text>
             </TouchableOpacity>
 
